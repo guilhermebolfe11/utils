@@ -4,7 +4,7 @@ import UUIDGenerator from "@/components/generator/UUIDGenerator";
 
 export const metadata: Metadata = {
     title:
-        "Utils | UUID Gnerator",
+        "Utils | UUID Generator",
     description: "Utils to SWE",
 };
 

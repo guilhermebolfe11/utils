@@ -32,7 +32,8 @@ const navItems: NavItem[] = [
             { name: "UUID", path: "/generator/uuid"},
             { name: "DateTime", path: "/generator/date-time"},
             { name: "Lorem", path: "/generator/lorem"},
-            { name: "Documents", path: "/generator/documents"}
+            { name: "Person", path: "/generator/person"},
+            { name: "Company", path: "/generator/company"}
         ]
     },
     {
