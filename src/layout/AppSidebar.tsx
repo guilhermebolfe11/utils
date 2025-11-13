@@ -33,7 +33,9 @@ const navItems: NavItem[] = [
             { name: "DateTime", path: "/generator/date-time"},
             { name: "Lorem", path: "/generator/lorem"},
             { name: "Person", path: "/generator/person"},
-            { name: "Company", path: "/generator/company"}
+            { name: "Company", path: "/generator/company"},
+            { name: "Address", path: "/generator/address"},
+            { name: "Internet", path: "/generator/internet"}
         ]
     },
     {
