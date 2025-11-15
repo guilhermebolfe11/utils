@@ -1,8 +1,18 @@
 "use client";
 
-import { DiffEditor as MonacoEditor } from "@monaco-editor/react";
+import dynamic from "next/dynamic";
 import React, {useRef} from "react";
 import { useTheme } from "@/context/ThemeContext";
+
+
+const MonacoEditor = dynamic(
+    () => import("@monaco-editor/react").then(mod => ({ default: mod.DiffEditor })),
+    {
+        ssr: false,
+        loading: () => <div className="flex items-center justify-center h-[70vh]">Carregando editor...</div>
+    }
+);
+
 
 export default function DiffEditor() {
     const editorRef = useRef<any>(null);
