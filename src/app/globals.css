@@ -290,7 +290,39 @@
 }
 
 @layer utilities {
-  /* For Remove Date Icon */
+  .animate-in {
+    animation-duration: 150ms;
+    animation-fill-mode: both;
+  }
+
+  .fade-in {
+    animation-name: fadeIn;
+  }
+
+  .slide-in-from-top-4 {
+    animation-name: slideInFromTop;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInFromTop {
+    from {
+      transform: translate(-50%, -1rem);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+  }
+
   input[type="date"]::-webkit-inner-spin-button,
   input[type="time"]::-webkit-inner-spin-button,
   input[type="date"]::-webkit-calendar-picker-indicator,
@@ -912,4 +944,75 @@ pre[class*="language-"] {
 }
 pre[class*="language-"].line-numbers {
   padding-left: 2.8em !important;
+}
+
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 300px;
+
+  &:hover {
+    border-color: var(--color-blue-light-100);
+    background: var(--color-blue-light-50);
+  }
+
+  svg {
+    color: var(--color-gray-400);
+    font-size: 1.25rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: var(--color-gray-800);
+    border-color: var(--color-gray-700);
+
+    &:hover {
+      border-color: var(--color-blue-light-600);
+      background: var(--color-blue-light-900);
+    }
+  }
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+  cursor: pointer;
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-gray-400);
+  }
+}
+
+.kbd {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--color-gray-100);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-gray-600);
+
+  @media (prefers-color-scheme: dark) {
+    background: var(--color-gray-700);
+    border-color: var(--color-gray-600);
+    color: var(--color-gray-300);
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
