@@ -2,13 +2,13 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: 'Utils - Tools for Developers',
+        name: 'Utils - Tools for SWE',
         short_name: 'Utils',
         description: 'A collection of essential tools for software developers to enhance productivity and streamline workflows.',
         start_url: '/',
         display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#465fff',
+        background_color: '#344054',
+        theme_color: '#344054',
         icons: [
             {
                 src: '/icon-192.png',

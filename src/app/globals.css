@@ -294,6 +294,18 @@
     animation-duration: 150ms;
     animation-fill-mode: both;
   }
+  .animate-bounce {
+    animation: bounce 0.3s ease-in-out;
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
 
   .fade-in {
     animation-name: fadeIn;

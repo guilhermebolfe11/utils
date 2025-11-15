@@ -107,7 +107,7 @@ const AppHeader: React.FC = () => {
                             </svg>
                         </button>
 
-                        <button
+                        {!isMobileOpen && <button
                             onClick={() => setIsSearchOpen(true)}
                             className="hidden xl:flex items-center gap-3 px-4 py-2 text-sm text-gray-500 bg-gray-50 border border-gray-200 rounded-lg hover:border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:border-gray-600 min-w-[300px]"
                         >
@@ -117,15 +117,7 @@ const AppHeader: React.FC = () => {
                                 <span>⌘</span>
                                 <span>K</span>
                             </kbd>
-                        </button>
-
-                        <button
-                            onClick={() => setIsSearchOpen(true)}
-                            className="flex xl:hidden items-center justify-center w-10 h-10 text-gray-500 rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-                            aria-label="Search"
-                        >
-                            <IoSearchOutline className="h-5 w-5" />
-                        </button>
+                        </button>}
                     </div>
                     <div
                         className={`${
@@ -138,7 +130,7 @@ const AppHeader: React.FC = () => {
                     </div>
                 </div>
             </header>
-            <GlobalSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+            {!isMobileOpen && <GlobalSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />}
         </React.Fragment>
     );
 };

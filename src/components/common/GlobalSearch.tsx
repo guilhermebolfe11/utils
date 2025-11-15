@@ -1,18 +1,20 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { IoSearchOutline, IoCloseOutline } from "react-icons/io5";
 import { MdFormatAlignCenter } from "react-icons/md";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import {BiTransfer} from "react-icons/bi";
-import {VscDiff} from "react-icons/vsc";
+import {VscDiff, VscTools} from "react-icons/vsc";
+import {useFavorites} from "@/hooks/useFavorites";
+import ToolButton from "@/components/common/ToolButton";
 
-interface Tool {
+export interface Tool {
     name: string;
     path: string;
     keywords: string[];
-    icon?: React.ReactNode;
+    icon: React.ReactNode;
     category: string;
 }
 
@@ -110,13 +112,12 @@ const tools: Tool[] = [
     // Others
     {
         name: "Diff Viewer",
-        path: "/diff",
-        keywords: ["diff", "compare", "comparison", "diferença", "comparar"],
-        icon: <VscDiff />,
+        path: "/tools/diff",
+        keywords: ["diff", "tools", "compare", "comparison", "diferença", "comparar"],
+        icon: <VscTools />,
         category: "Tools"
     },
 ];
-
 
 interface GlobalSearchProps {
     isOpen: boolean;
@@ -125,18 +126,40 @@ interface GlobalSearchProps {
 
 export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState<Tool[]>(tools);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const router = useRouter();
     const inputRef = useRef<HTMLInputElement>(null);
+    const { favorites, isLoaded } = useFavorites();
 
+    const results = useMemo(() => {
+        if (!isLoaded) return [];
+
+        if (!query.trim()) {
+            // Separar favoritos e outras ferramentas
+            const favoriteTools = tools.filter(tool => favorites.includes(tool.path));
+            const otherTools = tools.filter(tool => !favorites.includes(tool.path));
+            return [...favoriteTools, ...otherTools];
+        }
+
+        const searchQuery = query.toLowerCase();
+        return tools.filter(tool =>
+            tool.name.toLowerCase().includes(searchQuery) ||
+            tool.keywords.some(k => k.toLowerCase().includes(searchQuery)) ||
+            tool.category.toLowerCase().includes(searchQuery)
+        );
+    }, [query, favorites, isLoaded]);
+
+    // Resetar selectedIndex quando results mudar
+    useEffect(() => {
+        setSelectedIndex(0);
+    }, [results]);
+
+    // Effect para controlar o modal e focus
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
-            inputRef.current?.focus();
+            setTimeout(() => inputRef.current?.focus(), 100);
             setQuery("");
-            setResults(tools);
-            setSelectedIndex(0);
         } else {
             document.body.style.overflow = 'unset';
         }
@@ -145,24 +168,6 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             document.body.style.overflow = 'unset';
         };
     }, [isOpen]);
-
-    useEffect(() => {
-        if (!query.trim()) {
-            setResults(tools);
-            setSelectedIndex(0);
-            return;
-        }
-
-        const searchQuery = query.toLowerCase();
-        const filtered = tools.filter(tool =>
-            tool.name.toLowerCase().includes(searchQuery) ||
-            tool.keywords.some(k => k.includes(searchQuery)) ||
-            tool.category.toLowerCase().includes(searchQuery)
-        );
-
-        setResults(filtered);
-        setSelectedIndex(0);
-    }, [query]);
 
     const handleSelect = (path: string) => {
         router.push(path);
@@ -186,6 +191,9 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
 
     if (!isOpen) return null;
 
+    const favoriteResults = results.filter(tool => favorites.includes(tool.path));
+    const nonFavoriteResults = results.filter(tool => !favorites.includes(tool.path));
+
     return (
         <div className="fixed inset-0 z-[99999] flex items-start justify-center sm:items-center">
             {/* Backdrop */}
@@ -194,7 +202,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                 onClick={onClose}
             />
 
-            {/* Modal - Posicionamento fixo e responsivo */}
+            {/* Modal */}
             <div className="relative w-full max-w-2xl mx-4 mt-4 sm:mt-0 sm:mx-auto animate-in slide-in-from-top-4 duration-200">
                 <div className="rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-900 max-h-[calc(100vh-2rem)] sm:max-h-[80vh] flex flex-col">
                     {/* Search Input */}
@@ -208,6 +216,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyDown={handleKeyDown}
                             className="flex-1 bg-transparent text-gray-900 outline-none placeholder:text-gray-400 dark:text-white"
+                            autoComplete="off"
                         />
                         {query && (
                             <button
@@ -218,74 +227,80 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                                 <IoCloseOutline className="h-5 w-5" />
                             </button>
                         )}
-                        <button
-                            onClick={onClose}
-                            className="sm:hidden rounded-lg p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 flex-shrink-0"
-                            aria-label="Fechar busca"
-                        >
-                            <IoCloseOutline className="h-5 w-5" />
-                        </button>
-                        <kbd className="hidden rounded border border-gray-200 px-2 py-1 text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400 sm:block flex-shrink-0">
-                            ESC
-                        </kbd>
                     </div>
 
                     {/* Results */}
-                    <div className="overflow-y-auto flex-1">
-                        {results.length === 0 ? (
+                    <div className="overflow-y-auto flex-1 custom-scrollbar">
+                        {!isLoaded ? (
+                            <div className="p-8 text-center">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
+                            </div>
+                        ) : results.length === 0 ? (
                             <div className="p-8 text-center text-gray-500 dark:text-gray-400">
-                                Nenhuma ferramenta encontrada
+                                No tools to query "{query}"
                             </div>
                         ) : (
                             <div className="p-2">
-                                {results.map((tool, index) => (
-                                    <button
-                                        key={tool.path}
-                                        onClick={() => handleSelect(tool.path)}
-                                        className={`flex w-full items-center gap-3 rounded-lg p-3 text-left transition-colors ${
-                                            index === selectedIndex
-                                                ? "bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400"
-                                                : "text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
-                                        }`}
-                                    >
-                                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-xl dark:bg-gray-800">
-                                            {tool.icon}
+                                {/* Mostrar seção de favoritos apenas se não houver busca e houver favoritos */}
+                                {!query && favoriteResults.length > 0 && (
+                                    <>
+                                        <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            ⭐ Favorites
                                         </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="font-medium truncate">{tool.name}</div>
-                                            <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                                                {tool.category}
+                                        {favoriteResults.map((tool, index) => (
+                                            <ToolButton
+                                                key={tool.path}
+                                                tool={tool}
+                                                index={index}
+                                                isSelected={index === selectedIndex}
+                                                isFavorite={true}
+                                                onSelect={handleSelect}
+                                            />
+                                        ))}
+
+                                        {nonFavoriteResults.length > 0 && (
+                                            <div className="px-3 py-2 mt-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                                🛠️ All tools
                                             </div>
-                                        </div>
-                                        {index === selectedIndex && (
-                                            <kbd className="hidden sm:block rounded border border-gray-200 px-2 py-1 text-xs dark:border-gray-700 flex-shrink-0">
-                                                ↵
-                                            </kbd>
                                         )}
-                                    </button>
-                                ))}
+                                    </>
+                                )}
+
+                                {/* Resultados normais ou de busca */}
+                                {(query ? results : nonFavoriteResults).map((tool, baseIndex) => {
+                                    const adjustedIndex = query ? baseIndex : baseIndex + favoriteResults.length;
+                                    return (
+                                        <ToolButton
+                                            key={tool.path}
+                                            tool={tool}
+                                            index={adjustedIndex}
+                                            isSelected={adjustedIndex === selectedIndex}
+                                            isFavorite={favorites.includes(tool.path)}
+                                            onSelect={handleSelect}
+                                        />
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
 
-                    {/* Footer - Oculto no mobile */}
+                    {/* Footer */}
                     <div className="hidden sm:block border-t border-gray-200 p-3 dark:border-gray-800 flex-shrink-0">
                         <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                             <div className="flex items-center gap-4">
                                 <span className="flex items-center gap-1">
                                     <kbd className="rounded border border-gray-200 px-1.5 py-0.5 dark:border-gray-700">↑</kbd>
                                     <kbd className="rounded border border-gray-200 px-1.5 py-0.5 dark:border-gray-700">↓</kbd>
-                                    para navegar
+                                    flow
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <kbd className="rounded border border-gray-200 px-1.5 py-0.5 dark:border-gray-700">↵</kbd>
-                                    para selecionar
+                                    select
                                 </span>
                             </div>
-                            <span className="flex items-center gap-1">
-                                <kbd className="rounded border border-gray-200 px-1.5 py-0.5 dark:border-gray-700">ESC</kbd>
-                                para fechar
-                            </span>
+                            <kbd className="rounded border border-gray-200 px-2 py-1 dark:border-gray-700">
+                                ESC
+                            </kbd>
                         </div>
                     </div>
                 </div>
