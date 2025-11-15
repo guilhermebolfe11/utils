@@ -7,6 +7,7 @@ import { IoChevronDown, IoEllipsisHorizontalOutline } from "react-icons/io5";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { MdFormatAlignCenter } from "react-icons/md";
 import { BiTransfer } from "react-icons/bi";
+import { VscDiff } from "react-icons/vsc";
 
 type NavItem = {
     name: string;
@@ -22,7 +23,6 @@ const navItems: NavItem[] = [
         name: "Formatter",
         subItems: [
             { name: "JSON", path: "/formatter/json"},
-            { name: "YML", path: "/formatter/yml"}
         ]
     },
     {
@@ -44,7 +44,14 @@ const navItems: NavItem[] = [
         subItems: [
             { name: "JSON to YML", path: "/parser/json-to-yml"},
             { name: "YML to JSON", path: "/parser/yml-to-json"},
+            { name: "JSON to TOON", path: "/parser/json-to-toon"},
+            { name: "TOON to JSON", path: "/parser/toon-to-json"},
         ]
+    },
+    {
+        icon: <VscDiff/>,
+        name: "Diff",
+        path: '/diff'
     },
 ];
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
+import JsonFormatter from "@/components/formatter/JsonFormatter";
 export const metadata: Metadata = {
     title:
         "Utils | Formatter JSON",
@@ -18,9 +19,9 @@ export default function Json() {
                     </div>
                 </div>
             </div>
-            <div className="col-span-12 space-y-6 xl:col-span-6">
+            <div className="col-span-12 space-y-6">
                 <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-
+                    <JsonFormatter/>
                 </div>
             </div>
         </div>
