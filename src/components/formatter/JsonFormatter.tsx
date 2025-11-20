@@ -33,6 +33,7 @@ const JsonFormatter: React.FC = () => {
         <React.Fragment>
             <button
                 onClick={copyValue}
+                disabled={!error}
                 className="inline-flex cursor-pointer items-center gap-1 py-3 pl-3.5 pr-3 text-sm font-medium text-gray-700 dark:border-gray-800 dark:text-gray-400"
             >
                 <IoCopyOutline />

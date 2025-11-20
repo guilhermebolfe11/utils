@@ -49,9 +49,7 @@ const navItems: NavItem[] = [
         name: "Parser",
         subItems: [
             { name: "JSON to YML", path: "/parser/json-to-yml"},
-            { name: "YML to JSON", path: "/parser/yml-to-json"},
             { name: "JSON to TOON", path: "/parser/json-to-toon"},
-            { name: "TOON to JSON", path: "/parser/toon-to-json"},
             { name: "Base64", path: "/parser/base64"},
             { name: "URL Encode/Decode", path: "/parser/url"},
             { name: "Hash (MD5/SHA)", path: "/parser/hash"},

@@ -6,12 +6,12 @@ import Label from "@/components/common/Label";
 import {IoCopyOutline, IoSwapHorizontal} from "react-icons/io5";
 
 
-const UrlParser: React.FC<{toEncode:boolean}> = ({toEncode: initialMode}) => {
+const UrlParser: React.FC = () => {
     const [original, setOriginal] = useState("");
     const [parsed, setParsed] = useState("");
     const [error, setError] = useState(false);
     const [copyText, setCopyText] = useState("Copy");
-    const [toEncode, setToEncode] = useState(initialMode);
+    const [toEncode, setToEncode] = useState(true);
 
     function handleOriginalChangeToEncode(value: string) {
         setOriginal(value);

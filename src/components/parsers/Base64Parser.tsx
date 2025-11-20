@@ -6,12 +6,12 @@ import Label from "@/components/common/Label";
 import {IoCopyOutline, IoSwapHorizontal} from "react-icons/io5";
 
 
-const Base64Parser: React.FC<{toBase64:boolean}> = ({toBase64: initialMode}) => {
+const Base64Parser: React.FC = () => {
     const [original, setOriginal] = useState("");
     const [parsed, setParsed] = useState("");
     const [error, setError] = useState(false);
     const [copyText, setCopyText] = useState("Copy");
-    const [toBase64, setToBase64] = useState(initialMode);
+    const [toBase64, setToBase64] = useState(true);
 
     function handleOriginalChangeToBase64(value: string) {
         setOriginal(value);
