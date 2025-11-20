@@ -53,8 +53,11 @@ export default function HomeContent() {
                 { name: "YML to JSON", path: "/parser/yml-to-json" },
                 { name: "JSON to TOON", path: "/parser/json-to-toon" },
                 { name: "TOON to JSON", path: "/parser/toon-to-json" },
+                { name: "Base64", path: "/parser/base64"},
+                { name: "URL Encode/Decode", path: "/parser/url"},
+                { name: "Hash (MD5/SHA)", path: "/parser/hash"},
             ],
-            count: 4
+            count: 7
         },
         {
             title: "Tools",
@@ -78,12 +81,7 @@ export default function HomeContent() {
             icon: <IoRocketOutline className="text-3xl" />,
             title: "Lightning Fast",
             description: "No internet connection or server processing required. Instant results."
-        },
-        {
-            icon: <IoTimeOutline className="text-3xl" />,
-            title: "Always Available",
-            description: "Works offline and is always ready to use, anytime, anywhere."
-        },
+        }
     ];
 
     const popularTools = [
@@ -95,7 +93,9 @@ export default function HomeContent() {
 
     return (
         <>
-        <PrivacyBanner />
+        <div className="mb-6">
+            <PrivacyBanner/>
+        </div>
         <div className="grid grid-cols-12 gap-4 md:gap-6">
             {/* Hero Section */}
             <div className="col-span-12">

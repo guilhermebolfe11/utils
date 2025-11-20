@@ -108,6 +108,27 @@ const tools: Tool[] = [
         icon: <BiTransfer />,
         category: "Parsers"
     },
+    {
+        name: "Base64 Encoder/Decoder",
+        path: "/parser/base64",
+        keywords: ["base64", "encode", "decode", "converter", "codificar", "decodificar"],
+        icon: <BiTransfer />,
+        category: "Parsers"
+    },
+    {
+        name: "URL Encoder/Decoder",
+        path: "/parser/url",
+        keywords: ["url", "encode", "decode", "converter", "codificar", "decodificar", "uri", "encodeURIComponent"],
+        icon: <BiTransfer />,
+        category: "Parsers"
+    },
+    {
+        name: "Hash Generator (MD5/SHA)",
+        path: "/parser/hash",
+        keywords: ["hash", "md5", "sha", "sha1", "sha256", "sha512", "checksum", "crypto", "encryption"],
+        icon: <BiTransfer />,
+        category: "Parsers"
+    },
 
     // Others
     {
