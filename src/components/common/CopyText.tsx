@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IoCopyOutline } from "react-icons/io5";
 import { MdOutlineRestartAlt } from "react-icons/md";
 import Label from "@/components/common/Label";
@@ -16,19 +16,28 @@ interface CopyTextProps {
 const CopyText: React.FC<CopyTextProps> = ({value,generateValue,label}) => {
     const [copyText, setCopyText] = useState("Copy");
     const [generateText, setGenerateText] = useState("New");
+    const copyTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+    const generateTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+            if (generateTimerRef.current) clearTimeout(generateTimerRef.current);
+        };
+    }, []);
 
     const copyValue = () => {
         navigator.clipboard.writeText(value).then(() => {
             setCopyText("Copied!");
-            setTimeout(() => setCopyText("Copy"), 2000);
-        });
+            copyTimerRef.current = setTimeout(() => setCopyText("Copy"), 2000);
+        }).catch(() => { /* clipboard access denied */ });
     };
 
     const generate = () => {
         if(generateValue === undefined) return;
         generateValue();
         setGenerateText("Generated!");
-        setTimeout(() => setGenerateText("New"), 2000);
+        generateTimerRef.current = setTimeout(() => setGenerateText("New"), 2000);
     }
 
     return (

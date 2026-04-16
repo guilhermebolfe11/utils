@@ -3,12 +3,19 @@
 import { useFavorites } from "@/hooks/useFavorites";
 import { IoStarOutline, IoStar } from "react-icons/io5";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function FavoriteButton() {
     const pathname = usePathname();
     const { isFavorite, toggleFavorite, isLoaded } = useFavorites();
     const [isAnimating, setIsAnimating] = useState(false);
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     if (!isLoaded) {
         return (
@@ -24,7 +31,7 @@ export default function FavoriteButton() {
     const handleToggle = () => {
         setIsAnimating(true);
         toggleFavorite(pathname);
-        setTimeout(() => setIsAnimating(false), 300);
+        timerRef.current = setTimeout(() => setIsAnimating(false), 300);
     };
 
     return (

@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import TextArea from "@/components/common/TextArea";
 import Label from "@/components/common/Label";
 import {IoCopyOutline} from "react-icons/io5";
@@ -9,18 +9,23 @@ import {IoCopyOutline} from "react-icons/io5";
 
 const HashParser: React.FC = () => {
     const [input, setInput] = useState("");
-    const [md5Hash, setMd5Hash] = useState("");
     const [sha1Hash, setSha1Hash] = useState("");
     const [sha256Hash, setSha256Hash] = useState("");
     const [sha384Hash, setSha384Hash] = useState("");
     const [sha512Hash, setSha512Hash] = useState("");
     const [copyText, setCopyText] = useState<Record<string, string>>({
-        md5: "Copy",
         sha1: "Copy",
         sha256: "Copy",
         sha384: "Copy",
         sha512: "Copy",
     });
+    const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+    useEffect(() => {
+        return () => {
+            timersRef.current.forEach(clearTimeout);
+        };
+    }, []);
 
     // SHA hashing using Web Crypto API
     const sha = async (algorithm: 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512', str: string): Promise<string> => {
@@ -35,7 +40,6 @@ const HashParser: React.FC = () => {
         setInput(value);
 
         if (!value) {
-            setMd5Hash("");
             setSha1Hash("");
             setSha256Hash("");
             setSha384Hash("");
@@ -44,10 +48,6 @@ const HashParser: React.FC = () => {
         }
 
         try {
-            // Calculate MD5 (using simple implementation for browser)
-            const md5Result = await calculateMD5Browser(value);
-            setMd5Hash(md5Result);
-
             // Calculate SHA hashes
             const sha1Result = await sha('SHA-1', value);
             setSha1Hash(sha1Result);
@@ -65,29 +65,14 @@ const HashParser: React.FC = () => {
         }
     };
 
-    // Simple MD5 for browser (not cryptographically secure)
-    const calculateMD5Browser = async (str: string): Promise<string> => {
-        // Using a simple non-secure hash for MD5 in browser
-        // For production, consider using a library like crypto-js
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-        // Convert to hex and pad to 32 characters (MD5 length)
-        const hexHash = Math.abs(hash).toString(16);
-        // Simple padding to make it look like MD5 (32 chars)
-        return hexHash.padStart(32, '0').substring(0, 32);
-    };
-
     const copyValue = (hashType: string, value: string) => {
         navigator.clipboard.writeText(value).then(() => {
             setCopyText(prev => ({ ...prev, [hashType]: "Copied!" }));
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 setCopyText(prev => ({ ...prev, [hashType]: "Copy" }));
             }, 2000);
-        });
+            timersRef.current.push(timer);
+        }).catch(() => { /* clipboard access denied */ });
     };
 
     const HashOutput = ({ label, value, hashType }: { label: string; value: string; hashType: string }) => (
@@ -124,7 +109,6 @@ const HashParser: React.FC = () => {
             <div className="space-y-2">
                 <h3 className="text-lg font-semibold text-gray-400 mb-4">Hash Results</h3>
 
-                <HashOutput label="MD5 (128-bit)" value={md5Hash} hashType="md5" />
                 <HashOutput label="SHA-1 (160-bit)" value={sha1Hash} hashType="sha1" />
                 <HashOutput label="SHA-256 (256-bit)" value={sha256Hash} hashType="sha256" />
                 <HashOutput label="SHA-384 (384-bit)" value={sha384Hash} hashType="sha384" />

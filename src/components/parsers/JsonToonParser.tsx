@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import TextArea from "@/components/common/TextArea";
 import Label from "@/components/common/Label";
 import { encode, decode } from "@toon-format/toon";
@@ -13,6 +13,13 @@ const JsonToonParser: React.FC = () => {
     const [error, setError] = useState(false);
     const [copyText, setCopyText] = useState("Copy");
     const [toJson, setToJson] = useState(true);
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
 
     function handleOriginalChangeToToon(value: string) {
@@ -41,8 +48,8 @@ const JsonToonParser: React.FC = () => {
     const copyValue = () => {
         navigator.clipboard.writeText(parsed).then(() => {
             setCopyText("Copied!");
-            setTimeout(() => setCopyText("Copy"), 2000);
-        });
+            timerRef.current = setTimeout(() => setCopyText("Copy"), 2000);
+        }).catch(() => { /* clipboard access denied */ });
     };
 
     const toggleMode = () => {

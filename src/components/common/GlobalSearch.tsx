@@ -156,7 +156,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
         if (!isLoaded) return [];
 
         if (!query.trim()) {
-            // Separar favoritos e outras ferramentas
+            // Separate favorites from other tools
             const favoriteTools = tools.filter(tool => favorites.includes(tool.path));
             const otherTools = tools.filter(tool => !favorites.includes(tool.path));
             return [...favoriteTools, ...otherTools];
@@ -216,7 +216,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
     const nonFavoriteResults = results.filter(tool => !favorites.includes(tool.path));
 
     return (
-        <div className="fixed inset-0 z-[99999] flex items-start justify-center sm:items-center">
+        <div className="fixed inset-0 z-99999 flex items-start justify-center sm:items-center">
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200"
@@ -227,12 +227,12 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             <div className="relative w-full max-w-2xl mx-4 mt-4 sm:mt-0 sm:mx-auto animate-in slide-in-from-top-4 duration-200">
                 <div className="rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-900 max-h-[calc(100vh-2rem)] sm:max-h-[80vh] flex flex-col">
                     {/* Search Input */}
-                    <div className="flex items-center gap-3 border-b border-gray-200 p-4 dark:border-gray-800 flex-shrink-0">
-                        <IoSearchOutline className="h-5 w-5 flex-shrink-0 text-gray-400" />
+                    <div className="flex items-center gap-3 border-b border-gray-200 p-4 dark:border-gray-800 shrink-0">
+                        <IoSearchOutline className="h-5 w-5 shrink-0 text-gray-400" />
                         <input
                             ref={inputRef}
                             type="text"
-                            placeholder="Buscar ferramentas..."
+                            placeholder="Search tools..."
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyDown={handleKeyDown}
@@ -242,8 +242,8 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                         {query && (
                             <button
                                 onClick={() => setQuery("")}
-                                className="rounded-lg p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 flex-shrink-0"
-                                aria-label="Limpar busca"
+                                className="rounded-lg p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 shrink-0"
+                                aria-label="Clear search"
                             >
                                 <IoCloseOutline className="h-5 w-5" />
                             </button>
@@ -258,11 +258,11 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                             </div>
                         ) : results.length === 0 ? (
                             <div className="p-8 text-center text-gray-500 dark:text-gray-400">
-                                No tools to query "{query}"
+                                No tools found for "{query}"
                             </div>
                         ) : (
                             <div className="p-2">
-                                {/* Mostrar seção de favoritos apenas se não houver busca e houver favoritos */}
+                                {/* Show favorites section only when there's no search query and there are favorites */}
                                 {!query && favoriteResults.length > 0 && (
                                     <>
                                         <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -306,7 +306,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                     </div>
 
                     {/* Footer */}
-                    <div className="hidden sm:block border-t border-gray-200 p-3 dark:border-gray-800 flex-shrink-0">
+                    <div className="hidden sm:block border-t border-gray-200 p-3 dark:border-gray-800 shrink-0">
                         <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                             <div className="flex items-center gap-4">
                                 <span className="flex items-center gap-1">

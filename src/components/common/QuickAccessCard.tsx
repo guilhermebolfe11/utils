@@ -12,10 +12,10 @@ export default function QuickAccessCard({ name, path, icon, description }: Quick
     return (
         <Link
             href={path}
-            className="group relative rounded-xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-lg transition-all dark:border-gray-800 dark:bg-white/[0.03] dark:hover:border-primary-700"
+            className="group relative rounded-xl border border-gray-200 bg-white p-6 hover:border-primary-300 hover:shadow-lg transition-all dark:border-gray-800 dark:bg-white/3 dark:hover:border-primary-700"
         >
             <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 flex-shrink-0 text-gray-500 dark:text-gray-400 items-center justify-center rounded-lg bg-primary-50 text-2xl text-primary-600 group-hover:bg-primary-100 transition-colors dark:bg-primary-900/20 dark:text-primary-400 dark:group-hover:bg-primary-900/30">
+                <div className="flex h-12 w-12 shrink-0 text-gray-500 dark:text-gray-400 items-center justify-center rounded-lg bg-primary-50 text-2xl text-primary-600 group-hover:bg-primary-100 transition-colors dark:bg-primary-900/20 dark:text-primary-400 dark:group-hover:bg-primary-900/30">
                     {icon}
                 </div>
                 <div className="flex-1 min-w-0">

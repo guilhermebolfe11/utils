@@ -4,8 +4,9 @@ import InternetGenerator from "@/components/generator/InternetGenerator";
 import ToolPageHeader from "@/components/common/ToolPageHeader";
 
 export const metadata: Metadata = {
-    title: "Utils | Internet Generator",
-    description: "Generate fake emails, URLs, IP addresses, and passwords",
+    title: "Internet Data Generator — Emails, URLs, IPs & Passwords",
+    description: "Generate fake emails, URLs, IP addresses, usernames, and passwords for testing and development. All data created locally in your browser.",
+    alternates: { canonical: "/generator/internet" },
 };
 
 export default function Internet() {
@@ -16,7 +17,7 @@ export default function Internet() {
                 description="Generate internet-related data and credentials"
             />
             <div className="col-span-12 space-y-6 xl:col-span-6">
-                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
                     <InternetGenerator/>
                 </div>
             </div>

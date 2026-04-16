@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import TextArea from "@/components/common/TextArea";
 import Label from "@/components/common/Label";
 import { IoCopyOutline } from "react-icons/io5";
@@ -10,6 +10,13 @@ const JsonFormatter: React.FC = () => {
     const [value, setValue] = useState("");
     const [copyText, setCopyText] = useState("Copy");
     const [error, setError] = useState(false);
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     function handleFormatJson(value: string) {
         setValue(value);
@@ -25,15 +32,15 @@ const JsonFormatter: React.FC = () => {
     const copyValue = () => {
         navigator.clipboard.writeText(value).then(() => {
             setCopyText("Copied!");
-            setTimeout(() => setCopyText("Copy"), 2000);
-        });
+            timerRef.current = setTimeout(() => setCopyText("Copy"), 2000);
+        }).catch(() => { /* clipboard access denied */ });
     };
 
     return (
         <React.Fragment>
             <button
                 onClick={copyValue}
-                disabled={!error}
+                disabled={!value || error}
                 className="inline-flex cursor-pointer items-center gap-1 py-3 pl-3.5 pr-3 text-sm font-medium text-gray-700 dark:border-gray-800 dark:text-gray-400"
             >
                 <IoCopyOutline />

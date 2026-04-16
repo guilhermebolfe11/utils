@@ -6,7 +6,7 @@ export function useFavorites() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        // Garantir que estamos no cliente
+        // Ensure we are on the client side
         if (typeof window === 'undefined') return;
 
         try {
@@ -16,7 +16,7 @@ export function useFavorites() {
                 setFavorites(Array.isArray(parsed) ? parsed : []);
             }
         } catch (e) {
-            console.error("Erro ao carregar favoritos:", e);
+            console.error("Error loading favorites:", e);
             setFavorites([]);
         } finally {
             setIsLoaded(true);
@@ -31,9 +31,8 @@ export function useFavorites() {
 
             try {
                 localStorage.setItem("favorites", JSON.stringify(updated));
-                console.log("Favoritos atualizados:", updated);
             } catch (e) {
-                console.error("Erro ao salvar favoritos:", e);
+                console.error("Error saving favorites:", e);
             }
 
             return updated;

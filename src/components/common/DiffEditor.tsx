@@ -15,9 +15,9 @@ const MonacoEditor = dynamic(
 
 
 export default function DiffEditor() {
-    const editorRef = useRef<any>(null);
+    const editorRef = useRef<unknown>(null);
 
-    const handleMount = (editor: any) => {
+    const handleMount = (editor: unknown) => {
         editorRef.current = editor;
     };
 

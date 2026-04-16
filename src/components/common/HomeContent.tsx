@@ -97,7 +97,7 @@ export default function HomeContent() {
         <div className="grid grid-cols-12 gap-4 md:gap-6">
             {/* Hero Section */}
             <div className="col-span-12">
-                <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 dark:border-gray-800 p-8 md:p-12">
+                <div className="rounded-2xl border border-gray-200 bg-linear-to-br from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 dark:border-gray-800 p-8 md:p-12">
                     <div className="max-w-4xl mx-auto text-center">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 mb-6">
                             <IoCodeSlashOutline className="text-primary-600 dark:text-primary-400" />
@@ -106,7 +106,7 @@ export default function HomeContent() {
 
                         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                             Software Engineers Utilities
-                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-purple-600 dark:from-primary-400 dark:to-purple-400 mt-2">
+                            <span className="block text-transparent bg-clip-text bg-linear-to-r from-primary-600 to-purple-600 dark:from-primary-400 dark:to-purple-400 mt-2">
                                 Made Simple
                             </span>
                         </h1>
@@ -148,7 +148,7 @@ export default function HomeContent() {
             {/* Favorites Section */}
             {isLoaded && favorites.length > 0 && (
                 <div className="col-span-12">
-                    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6">
+                    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/3 p-6">
                         <div className="flex items-center gap-2 mb-6">
                             <IoStarOutline className="text-2xl text-warning-500" />
                             <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
@@ -176,7 +176,7 @@ export default function HomeContent() {
 
             {/* Popular Tools */}
             <div className="col-span-12">
-                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/3 p-6">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
                             Popular Tools
@@ -216,7 +216,7 @@ export default function HomeContent() {
 
             {/* Features */}
             <div className="col-span-12">
-                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-8">
+                <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/3 p-8">
                     <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8 text-center">
                         Why Choose Utils?
                     </h2>
@@ -230,7 +230,7 @@ export default function HomeContent() {
 
             {/* Stats Section */}
             <div className="col-span-12">
-                <div className="rounded-2xl border border-gray-200 bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 dark:border-gray-800 p-8">
+                <div className="rounded-2xl border border-gray-200 bg-linear-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 dark:border-gray-800 p-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                         <div>
                             <div className="text-5xl font-bold text-gray-500 dark:text-gray-400 mb-2">

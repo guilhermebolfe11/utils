@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import TextArea from "@/components/common/TextArea";
 import Label from "@/components/common/Label";
 import yaml from "js-yaml";
@@ -13,6 +13,13 @@ const JsonYmlParser: React.FC = () => {
     const [error, setError] = useState(false);
     const [copyText, setCopyText] = useState("Copy");
     const [toJson, setToJson] = useState(true);
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     const toggleMode = () => {
         setToJson(!toJson);
@@ -49,8 +56,8 @@ const JsonYmlParser: React.FC = () => {
     const copyValue = () => {
         navigator.clipboard.writeText(parsed).then(() => {
             setCopyText("Copied!");
-            setTimeout(() => setCopyText("Copy"), 2000);
-        });
+            timerRef.current = setTimeout(() => setCopyText("Copy"), 2000);
+        }).catch(() => { /* clipboard access denied */ });
     };
 
     return (

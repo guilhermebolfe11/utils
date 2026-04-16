@@ -4,8 +4,9 @@ import AddressGenerator from "@/components/generator/AddressGenerator";
 import ToolPageHeader from "@/components/common/ToolPageHeader";
 
 export const metadata: Metadata = {
-    title: "Utils | Address Generator",
-    description: "Generate fake addresses, cities, countries, and zip codes",
+    title: "Fake Address Generator — Streets, Cities & Zip Codes",
+    description: "Generate realistic fake addresses with street names, cities, countries, and zip codes. Perfect for form testing and development. Free online tool.",
+    alternates: { canonical: "/generator/address" },
 };
 
 export default function Address() {
@@ -16,7 +17,7 @@ export default function Address() {
                 description="Generate location and address data"
             />
             <div className="col-span-12 space-y-6 xl:col-span-6">
-                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
                     <AddressGenerator/>
                 </div>
             </div>

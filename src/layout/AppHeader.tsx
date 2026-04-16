@@ -48,7 +48,7 @@ const AppHeader: React.FC = () => {
                     <div className="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-gray-200 dark:border-gray-800 sm:gap-4 xl:justify-normal xl:border-b-0 xl:px-0 xl:py-4">
                         <button
                             className={`flex items-center justify-center w-10 h-10 text-gray-500 border-gray-200 rounded-lg z-99999 dark:border-gray-800 dark:text-gray-400 lg:h-11 lg:w-11 xl:border lg:bg-transparent dark:lg:bg-transparent ${
-                                isMobileOpen ? "bg-gray-100 dark:bg-white/[0.03]" : ""
+                                isMobileOpen ? "bg-gray-100 dark:bg-white/3" : ""
                             }`}
                             onClick={handleToggle}
                             aria-label="Toggle Sidebar"
@@ -112,7 +112,7 @@ const AppHeader: React.FC = () => {
                             className="hidden xl:flex items-center gap-3 px-4 py-2 text-sm text-gray-500 bg-gray-50 border border-gray-200 rounded-lg hover:border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:border-gray-600 min-w-[300px]"
                         >
                             <IoSearchOutline className="h-5 w-5" />
-                            <span className="flex-1 text-left">Buscar ferramentas...</span>
+                            <span className="flex-1 text-left">Search tools...</span>
                             <kbd className="hidden sm:flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 border border-gray-200 rounded dark:bg-gray-700 dark:border-gray-600">
                                 <span>⌘</span>
                                 <span>K</span>

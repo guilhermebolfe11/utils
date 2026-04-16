@@ -4,8 +4,9 @@ import JsonYmlParser from "@/components/parsers/JsonYmlParser";
 import ToolPageHeader from "@/components/common/ToolPageHeader";
 
 export const metadata: Metadata = {
-    title: "Utils | JSON x YML Parser",
-    description: "Convert JSON x YAML format instantly",
+    title: "JSON to YAML Converter — Convert JSON ↔ YAML Online",
+    description: "Convert JSON to YAML and YAML to JSON instantly. Free online bidirectional converter for developers. No data leaves your browser.",
+    alternates: { canonical: "/parser/json-to-yml" },
 };
 
 export default function JsonToYml() {
@@ -16,7 +17,7 @@ export default function JsonToYml() {
                 description="Convert JSON x YAML format"
             />
             <div className="col-span-12">
-                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
                     <JsonYmlParser/>
                 </div>
             </div>

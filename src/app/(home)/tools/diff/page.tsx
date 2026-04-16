@@ -4,8 +4,9 @@ import type {Metadata} from "next";
 import ToolPageHeader from "@/components/common/ToolPageHeader";
 
 export const metadata: Metadata = {
-    title: "Utils | Diff Viewer",
-    description: "Compare and highlight differences between two text inputs",
+    title: "Diff Checker — Compare Text Side by Side Online",
+    description: "Compare and highlight differences between two text blocks with a side-by-side diff viewer. Powered by Monaco Editor. Free online tool for developers.",
+    alternates: { canonical: "/tools/diff" },
 };
 
 export default function DiffPage() {
@@ -16,7 +17,7 @@ export default function DiffPage() {
                 description="Compare text differences with side-by-side view"
             />
             <div className="col-span-12 space-y-6">
-                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
                     <DiffEditor/>
                 </div>
             </div>

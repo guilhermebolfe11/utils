@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import TextArea from "@/components/common/TextArea";
 import Label from "@/components/common/Label";
 import {IoCopyOutline, IoSwapHorizontal} from "react-icons/io5";
@@ -12,6 +12,13 @@ const UrlParser: React.FC = () => {
     const [error, setError] = useState(false);
     const [copyText, setCopyText] = useState("Copy");
     const [toEncode, setToEncode] = useState(true);
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     function handleOriginalChangeToEncode(value: string) {
         setOriginal(value);
@@ -40,8 +47,8 @@ const UrlParser: React.FC = () => {
     const copyValue = () => {
         navigator.clipboard.writeText(parsed).then(() => {
             setCopyText("Copied!");
-            setTimeout(() => setCopyText("Copy"), 2000);
-        });
+            timerRef.current = setTimeout(() => setCopyText("Copy"), 2000);
+        }).catch(() => { /* clipboard access denied */ });
     };
 
     const toggleMode = () => {
@@ -80,7 +87,7 @@ const UrlParser: React.FC = () => {
                     className="h-[70vh] w-full"
                     error={error}
                     onChange={toEncode ? handleOriginalChangeToEncode : handleOriginalChangeToDecode}
-                    placeholder={toEncode ? "Input text to Encode URL..." : "Past URL encode to decode..."}
+                    placeholder={toEncode ? "Input text to Encode URL..." : "Paste URL encode to decode..."}
                 />
             </div>
 

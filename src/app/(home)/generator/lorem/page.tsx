@@ -4,8 +4,9 @@ import LoremGenerator from "@/components/generator/LoremGenerator";
 import ToolPageHeader from "@/components/common/ToolPageHeader";
 
 export const metadata: Metadata = {
-    title: "Utils | Lorem Generator",
-    description: "Generate placeholder text, words, sentences, and paragraphs",
+    title: "Lorem Ipsum Generator — Placeholder Text Online",
+    description: "Generate Lorem Ipsum placeholder text — words, sentences, or paragraphs. Perfect for mockups, wireframes, and design prototypes. Free and instant.",
+    alternates: { canonical: "/generator/lorem" },
 };
 
 export default function Lorem() {
@@ -16,7 +17,7 @@ export default function Lorem() {
                 description="Generate placeholder text for your projects"
             />
             <div className="col-span-12 space-y-6 xl:col-span-6">
-                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
                     <LoremGenerator/>
                 </div>
             </div>

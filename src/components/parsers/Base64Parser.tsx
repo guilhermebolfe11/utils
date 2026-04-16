@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import TextArea from "@/components/common/TextArea";
 import Label from "@/components/common/Label";
 import {IoCopyOutline, IoSwapHorizontal} from "react-icons/io5";
@@ -12,6 +12,13 @@ const Base64Parser: React.FC = () => {
     const [error, setError] = useState(false);
     const [copyText, setCopyText] = useState("Copy");
     const [toBase64, setToBase64] = useState(true);
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     function handleOriginalChangeToBase64(value: string) {
         setOriginal(value);
@@ -28,7 +35,7 @@ const Base64Parser: React.FC = () => {
     function handleOriginalChangeFromBase64(value: string) {
         setOriginal(value);
         try {
-            const decoded = decodeURIComponent(escape(atob(value)));
+            const decoded = new TextDecoder().decode(Uint8Array.from(atob(value), c => c.charCodeAt(0)));
             setParsed(decoded);
             setError(false);
         } catch (error) {
@@ -40,8 +47,8 @@ const Base64Parser: React.FC = () => {
     const copyValue = () => {
         navigator.clipboard.writeText(parsed).then(() => {
             setCopyText("Copied!");
-            setTimeout(() => setCopyText("Copy"), 2000);
-        });
+            timerRef.current = setTimeout(() => setCopyText("Copy"), 2000);
+        }).catch(() => { /* clipboard access denied */ });
     };
 
     const toggleMode = () => {
@@ -79,7 +86,7 @@ const Base64Parser: React.FC = () => {
                     className="h-[70vh] w-full"
                     error={error}
                     onChange={toBase64 ? handleOriginalChangeToBase64 : handleOriginalChangeFromBase64}
-                    placeholder={toBase64 ? "Input text to encode in Base64..." : "Past the text to decode..."}
+                    placeholder={toBase64 ? "Input text to encode in Base64..." : "Paste the text to decode..."}
                 />
             </div>
 

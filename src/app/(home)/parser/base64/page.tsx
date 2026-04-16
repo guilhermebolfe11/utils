@@ -4,8 +4,9 @@ import Base64Parser from "@/components/parsers/Base64Parser";
 import ToolPageHeader from "@/components/common/ToolPageHeader";
 
 export const metadata: Metadata = {
-    title: "Utils | Base64 Parser",
-    description: "Encode and decode Base64 strings instantly",
+    title: "Base64 Encoder & Decoder — Convert Text to Base64 Online",
+    description: "Encode text to Base64 or decode Base64 back to text instantly. Supports Unicode characters. Free online tool, no data sent to any server.",
+    alternates: { canonical: "/parser/base64" },
 };
 
 export default function Base64() {
@@ -16,7 +17,7 @@ export default function Base64() {
                 description="Convert text to Base64 and decode Base64 to text"
             />
             <div className="col-span-12">
-                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
                     <Base64Parser/>
                 </div>
             </div>
