@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import {Metadata,Viewport} from "next";
 import JsonLd from "@/components/common/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://utils.dev";
 const SITE_NAME = "Utils";
@@ -87,6 +88,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
             </SidebarProvider>
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
         </body>
         </html>
     );
